@@ -4,9 +4,12 @@ import org.springframework.stereotype.Service;
 import web.models.Car;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CarServiceImp implements CarService {
+
+
     public List<Car> getAllCars() {
 
         List<Car> cars = new ArrayList<>();
@@ -18,12 +21,13 @@ public class CarServiceImp implements CarService {
         return cars;
     }
 
-    public List<Car> getCars(int count) {
+
+    public List<Car> getCars(Integer count) {
         List<Car> allCars = getAllCars();
-        if (count >= allCars.size()) {
+        if (count == null || count >= 5) {
             return allCars;
         } else {
-            return allCars.subList(0, count);
+            return allCars.stream().limit(count).collect(Collectors.toList());
         }
     }
 }
